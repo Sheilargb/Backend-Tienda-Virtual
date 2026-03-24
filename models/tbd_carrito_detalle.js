@@ -7,12 +7,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.tbb_carritos, {
         foreignKey: 'id_carrito',
-        as: 'carrito'
+        as: 'carrito',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       });
 
       this.belongsTo(models.tbb_productos, {
         foreignKey: 'id_producto',
-        as: 'producto'
+        as: 'producto',
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT'
       });
     }
   }

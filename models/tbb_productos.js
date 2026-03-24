@@ -12,7 +12,9 @@ module.exports = (sequelize, DataTypes) => {
 
       this.hasMany(models.tbd_carrito_detalle, {
         foreignKey: 'id_producto',
-        as: 'detalles_carrito'
+        as: 'detalles_carrito',
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT'
       });
     }
   }
@@ -41,16 +43,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'tbb_productos',
   });
-//----------------------------------------------------------------------------------------------------
-  tbb_productos.associate = function(models) {
-    // associations can be defined here
-    tbb_productos.belongsTo(models.tbc_categorias,
-        {
-            as: 'tbc_categorias',
-            foreignKey: 'id_categoria',
-        }
-    );
-  };
-//----------------------------------------------------------------------------------------------------
   return tbb_productos;
 };

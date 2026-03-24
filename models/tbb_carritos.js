@@ -7,12 +7,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.tbc_usuarios, {
         foreignKey: 'id_usuario',
-        as: 'usuario'
+        as: 'usuario',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       });
 
       this.hasMany(models.tbd_carrito_detalle, {
         foreignKey: 'id_carrito',
-        as: 'detalles'
+        as: 'detalles',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       });
     }
   }
