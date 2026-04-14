@@ -40,6 +40,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'tbd_carrito_detalle',
+    tableName: 'tbd_carrito_detalle',
+    freezeTableName: true,
   });
   return tbd_carrito_detalle;
 };
