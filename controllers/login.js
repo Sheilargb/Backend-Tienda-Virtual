@@ -4,7 +4,8 @@ const { tbc_usuarios } = require('../models');
 module.exports = {
     async login(req, res) {
         try {
-            const { email, password } = req.body;
+            const email = req.body.email || req.body.username;
+            const { password } = req.body;
 
             if (!email || !password) {
                 return res.status(400).send({
@@ -24,7 +25,7 @@ module.exports = {
 
             if (usuario.password !== password) {
                 return res.status(401).send({
-                    message: 'Contraseña incorrecta',
+                    message: 'Contrasena incorrecta',
                 });
             }
 
