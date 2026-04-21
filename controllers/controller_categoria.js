@@ -1,19 +1,27 @@
-const Sequelize = require('sequelize');
 const db = require('../models');
 const categoria = db.tbc_categorias;
 
+function serializarCategoria(registro) {
+    const data = registro.toJSON ? registro.toJSON() : registro;
+
+    return {
+        ...data,
+        category: data.nombre,
+    };
+}
+
 module.exports = {
     create(req, res) {
-        return categoria .create({
-                nombre: req.body.nombre
+        return categoria.create({
+                nombre: req.body.nombre || req.body.category
             })
-            .then(categoria => res.status(200).send(categoria))
+            .then(nuevaCategoria => res.status(200).send(serializarCategoria(nuevaCategoria)))
             .catch(error => res.status(400).send(error));
     },
 
     list(_, res) {
-        return categoria .findAll({})
-            .then(categoria => res.status(200).send(categoria))
+        return categoria.findAll({})
+            .then(categorias => res.status(200).send(categorias.map(serializarCategoria)))
             .catch(error => res.status(400).send(error));
     },
 
@@ -23,7 +31,7 @@ module.exports = {
                     id: req.params.id,
                 },
     })
-            .then(categoria => res.status(200).send(categoria))
+            .then(categorias => res.status(200).send(categorias.map(serializarCategoria)))
             .catch(error => res.status(400).send(error))
     },
 
@@ -39,7 +47,7 @@ module.exports = {
      update(req, res) {
         return categoria.update(
             {
-                nombre: req.body.nombre
+                nombre: req.body.nombre || req.body.category
             }, 
             {
                 where: {
